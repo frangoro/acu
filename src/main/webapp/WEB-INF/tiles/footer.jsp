@@ -1,0 +1,1 @@
+<p>frangoro &copy;</p>
