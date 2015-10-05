@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.web.bind.support.SessionStatus;
  */
 @Controller
 @RequestMapping("/member-module")
+@SessionAttributes("member")
 public class MemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -69,10 +71,14 @@ public class MemberController {
     		return "members";
     	}
     	
+    	// Persist the member
     	memberService.addMember(member);
     	
     	logger.debug("End submitForm");
     	
+    	// Clear session attributes
+    	status.setComplete();
+    	// Redirect URL so that do not re-submit the form
     	return "redirect:member-module";
     }
     
